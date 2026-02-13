@@ -1,0 +1,244 @@
+/* Palette (palette 4): dark / neon
+   bg: #0E0E0E
+   secondary: #1C1C1C
+   accent yellow: #FDD835
+   accent teal: #00ADB5
+   text: #EEEEEE
+   captions: #BDBDBD
+*/
+
+:root{
+  --bg: #0E0E0E;
+  --panel: #1C1C1C;
+  --accent: #FDD835;
+  --accent-2: #00ADB5;
+  --text: #EEEEEE;
+  --muted: #BDBDBD;
+
+  --radius: 12px;
+  --container: 1200px;
+  --glass: rgba(255,255,255,0.03);
+}
+
+/* Reset and base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.4;
+  overflow-x:hidden;
+  /* animated gradient overlay */
+  background-image: linear-gradient(120deg, rgba(255,216,53,0.03), rgba(0,173,181,0.03));
+  position:relative;
+}
+
+/* animated moving gradient (pseudo element) */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background: linear-gradient(60deg, rgba(15,15,15,1) 0%, rgba(14,14,14,1) 20%, rgba(25,29,31,1) 45%, rgba(10,10,10,1) 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 14s linear infinite;
+  opacity:1;
+}
+
+/* subtle colored moving glow */
+body::after{
+  content:"";
+  position:fixed;
+  inset:-20%;
+  z-index:-3;
+  background: radial-gradient(40% 40% at 10% 10%, rgba(253,216,53,0.06), transparent 10%),
+              radial-gradient(30% 30% at 90% 80%, rgba(0,173,181,0.04), transparent 10%);
+  background-size: 200% 200%;
+  animation: glowMove 18s ease-in-out infinite;
+}
+
+/* container */
+.container{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* Header */
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:40;
+  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.header-inner{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:14px 0;
+}
+
+/* logo */
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{
+  width:48px;height:48px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--bg);
+  background:linear-gradient(180deg,var(--accent), #ffd85c);
+  box-shadow:0 6px 18px rgba(253,216,53,0.12);
+}
+.logo-text strong{font-size:18px;display:block}
+.logo-text .tagline{font-size:12px;color:var(--muted)}
+
+/* nav */
+.main-nav{display:flex;gap:16px;margin-left:12px}
+.main-nav a{color:var(--muted);text-decoration:none;font-size:15px;padding:8px;border-radius:8px}
+.main-nav a:hover{color:var(--text);background:rgba(255,255,255,0.02)}
+
+/* header buttons */
+.header-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;text-decoration:none;cursor:pointer;font-weight:600}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.03)}
+.btn-primary{background:linear-gradient(90deg,var(--accent), #ffd85c);color:var(--bg)}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text)}
+.btn:hover{transform:translateY(-3px);transition:all 220ms cubic-bezier(.2,.9,.3,1)}
+.btn:active{transform:translateY(0)}
+
+/* Hero */
+.hero{padding:60px 0 48px;position:relative;overflow:visible}
+.hero-grid{display:grid;grid-template-columns:1fr 520px;gap:36px;align-items:center}
+.hero-content h1{font-size:34px;margin:0 0 12px}
+.hero-content .accent{color:var(--accent);text-shadow:0 6px 18px rgba(253,216,53,0.06)}
+.lead{color:var(--muted);margin-bottom:18px}
+
+/* CTA */
+.hero-cta{display:flex;gap:12px;margin-bottom:16px}
+.btn.large{padding:14px 20px;font-size:16px;border-radius:14px}
+.btn-primary{box-shadow:0 10px 30px rgba(253,216,53,0.08)}
+
+/* features */
+.features{display:flex;gap:14px;list-style:none;padding:0;margin:8px 0 0;color:var(--muted)}
+.features li{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:8px 12px;border-radius:10px;font-size:14px}
+
+/* Hero media */
+.hero-media{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hero-media .truck-img{
+  width:100%;
+  max-width:520px;
+  border-radius:14px;
+  box-shadow: 0 30px 60px rgba(2,6,23,0.6);
+  background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+  object-fit:cover;
+  display:block;
+  opacity:0;
+  transform:translateY(18px) scale(0.99);
+  animation: imgIn 900ms ease forwards 200ms;
+}
+
+/* little vehicle cards */
+.vehicle-cards{position:absolute;right:-12px;bottom:-22px;display:flex;gap:8px}
+.card-img{
+  width:140px;height:90px;border-radius:10px;object-fit:cover;
+  box-shadow:0 10px 30px rgba(2,6,23,0.6);opacity:0;transform:translateY(10px);
+  animation: imgIn 900ms ease forwards;
+}
+.card-img.delay{animation-delay:360ms}
+
+/* SERVICES */
+.section{padding:48px 0}
+.section-title{font-size:22px;margin:0 0 18px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--panel);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+.card-icon{font-size:28px;margin-bottom:8px}
+
+/* PRICES dark section */
+.dark-section{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border-top:1px solid rgba(255,255,255,0.02);border-bottom:1px solid rgba(255,255,255,0.02)}
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px}
+.price-item{background:rgba(255,255,255,0.02);padding:16px;border-radius:12px}
+.price{font-size:20px;color:var(--accent);margin:8px 0}
+.note{color:var(--muted);margin-top:12px}
+
+/* REVIEWS */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.review{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+.review cite{display:block;margin-top:12px;color:var(--muted);font-size:13px}
+
+/* CONTACTS */
+.contact-section{padding:40px 0 80px}
+.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:start}
+.contact-card{background:var(--panel);padding:20px;border-radius:12px}
+.map-card .map-placeholder{height:220px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;color:var(--muted)}
+
+/* Footer */
+.site-footer{padding:18px 0;border-top:1px solid rgba(255,255,255,0.03);margin-top:40px}
+.footer-inner{display:flex;align-items:center;gap:12px;justify-content:space-between;color:var(--muted)}
+.footer-nav a{color:var(--muted);text-decoration:none;margin-left:8px}
+.socials a{display:inline-block;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.01);color:var(--muted);text-decoration:none}
+
+/* Animations */
+@keyframes gradientShift{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes glowMove{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-6%,4%) scale(1.02)}
+  100%{transform:translate(0,0) scale(1)}
+}
+@keyframes imgIn{
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* floating image animations */
+.floating{animation: floatY 6s ease-in-out infinite}
+.float-small{animation: floatY 5.2s ease-in-out infinite}
+.float-small.delay{animation-delay:0.6s}
+@keyframes floatY{
+  0%{transform:translateY(0) rotate(-0.2deg)}
+  50%{transform:translateY(-8px) rotate(0.2deg)}
+  100%{transform:translateY(0) rotate(-0.2deg)}
+}
+
+/* Button hover color change (accent shift) */
+.btn-primary{
+  transition: transform 180ms ease, box-shadow 200ms ease, filter 180ms ease;
+}
+.btn-primary:hover{
+  transform:translateY(-4px) scale(1.02);
+  box-shadow:0 20px 60px rgba(253,216,53,0.14);
+  filter:brightness(1.02);
+}
+
+/* outline button hover */
+.btn-outline:hover{
+  background: linear-gradient(90deg,var(--accent), #ffd85c, var(--accent-2));
+  color:var(--bg);
+  border: none;
+  box-shadow:0 18px 48px rgba(0,173,181,0.06);
+}
+
+/* responsive */
+@media (max-width:1000px){
+  .hero-grid{grid-template-columns:1fr; padding-bottom:10px}
+  .hero-media{order:-1;margin-bottom:18px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .price-grid{grid-template-columns:repeat(2,1fr)}
+  .reviews{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .main-nav{display:none}
+  .header-actions{gap:8px}
+}
+@media (max-width:560px){
+  .cards{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:1fr}
+  .logo-text strong{font-size:15px}
+  .hero-content h1{font-size:22px}
+  .hero-content .lead{font-size:14px}
+}
